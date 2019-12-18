@@ -64,7 +64,7 @@ docker volume rm ala-docker_data_solr ala-docker_db_data_cassandra ala-docker_da
 docker-compose up -d
 docker-compose restart webserver
 ```
-8. Add a new data resource (at least add a name), and upload your occurrence dwca.zip in [Collectory](http://molecular.infrabas.se/collectory/dataResource/list)
+8. Add a new data resource (at least add a name), and upload your occurrence dwca.zip in Collectory
 
 9. Map records against nameindex (will update the Solr index for Occurrence search \[core: biocache\])
 ```console
