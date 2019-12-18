@@ -82,8 +82,47 @@ biocache> process -dr drX
 # Write occurrence records from cassandra to SOLR index -> generates the ALA-hub Occurrence search index
 biocache> index -dr drX
 
-#Quit
+# Quit
 exit
+```
+10. Restart services
+```console
+docker-compose restart biocacheservice biocachehub
+```
+
+11. Prepare files for creating the Solr index for Taxonomic search  \[cores: bie-offline / bie\]
+```console
+# Move old taxonomy dwca to backup folder
+docker exec -it bieindex bash
+mv /data/bie/import/dwc-a /data/bie/import/dwca-maria-XXXXXX 
+exit
+
+# Unzip new taxonomy dwca
+cd dyntaxa-index/
+mkdir dwc-a
+unzip dyntaxa.dwca.zip -d dwc-a
+
+# Copy into running bieindex container
+docker cp dwc-a bieindex:/data/bie/import/
+```
+
+\[ Background: Solr core = running instance of a Lucene index, needed to perform indexing. The taxonomic index in BAS has two alternative cores, with the same schema (structure): bie and bie-offline. Swapping cores means to swap file pointers (inc. filename) between the cores. The point of this is to make it possible to perform the resource intensive and long process of taxonomy index generation offline (to produce bie-offline), so that it does not block the search functionality, before swapping it with the bie. \]
+
+12. Import taxonomy to bie-offline index
+Go to [Admin | BIE Web services](http://molecular.infrabas.se/bie-index/admin)
+Click *DwCA Import - Import taxon data in Darwin Core Archive form*
+Check *Clear existing taxonomic data* to clear up old stuffs if any
+Click */data/bie/import/dwc-a 	Import DwCA*
+
+13. Swap cores
+In [SOLR admin](http://molecular.infrabas.se/solr/#/) , click *Core Admin* | *Swap*
+Make sure it reads *this: bie andand: bie-offline*
+Click *Swap Cores*
+
+14. If needed, restart services
+```console
+make up
+docker-compose restart webserver
 ```
 
 ## References
