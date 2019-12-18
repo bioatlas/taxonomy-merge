@@ -29,7 +29,7 @@ docker build --no-cache -t bioatlas/ala-dyntaxaindex:xxx dyntaxa-index
 ```console
 docker run --rm -it bioatlas/ala-dyntaxaindex:xxx nameindexer -testSearch zzz
 ```
-Should output something similar to:
+&nbsp;&nbsp;&nbsp;&nbsp; Should output something similar to:
 ```console
 ...
 Classification: "null",Bacteria,Acidobacteriota,Acidobacteriae,Acidobacteriales,Acidobacteriaceae,Edaphobacter
@@ -41,7 +41,7 @@ Match type: exactMatch
 ```console
 nano docker-compose.yml
 ```
-  Use *Ctrl+w* to search for e.g. 'dynt'. Comment out current image and add new image, like so:
+&nbsp;&nbsp;&nbsp;&nbsp; Use *Ctrl+w* to search for e.g. 'dynt'. Comment out current image and add new image, like so:
 ```console
 nameindex:
 #image: bioatlas/ala-nameindex:v0.4
@@ -51,7 +51,7 @@ command: /bin/ash
 container_name: nameindex
 ...
 ```
-Use *Ctrl+x* to save
+&nbsp;&nbsp;&nbsp;&nbsp; Use *Ctrl+x* to save
 
 6. Clean-up data volumes (will remove indices, and all data from ingested datasets)
 ```console
@@ -106,18 +106,18 @@ unzip dyntaxa.dwca.zip -d dwc-a
 docker cp dwc-a bieindex:/data/bie/import/
 ```
 
-\[ Background: Solr core = running instance of a Lucene index, needed to perform indexing. The taxonomic index in BAS has two alternative cores, with the same schema (structure): bie and bie-offline. Swapping cores means to swap file pointers (inc. filename) between the cores. The point of this is to make it possible to perform the resource intensive and long process of taxonomy index generation offline (to produce bie-offline), so that it does not block the search functionality, before swapping it with the bie. \]
+*Some background: Solr core = running instance of a Lucene index, needed to perform indexing. The taxonomic index in BAS has two alternative cores, with the same schema (structure): bie and bie-offline. Swapping cores means to swap file pointers (inc. filename) between the cores. The point of this is to make it possible to perform the resource intensive and long process of taxonomy index generation offline (to produce bie-offline), so that it does not block the search functionality, before swapping it with the bie.*
 
 12. Import taxonomy to bie-offline index
 Go to [Admin | BIE Web services](http://molecular.infrabas.se/bie-index/admin)
-Click *DwCA Import - Import taxon data in Darwin Core Archive form*
-Check *Clear existing taxonomic data* to clear up old stuffs if any
-Click */data/bie/import/dwc-a 	Import DwCA*
+<br>Click *DwCA Import - Import taxon data in Darwin Core Archive form*
+<br>Check *Clear existing taxonomic data* to clear up old stuffs if any
+<br>Click */data/bie/import/dwc-a 	Import DwCA*
 
 13. Swap cores
 In [SOLR admin](http://molecular.infrabas.se/solr/#/) , click *Core Admin* | *Swap*
-Make sure it reads *this: bie andand: bie-offline*
-Click *Swap Cores*
+<br>Make sure it reads *this: bie andand: bie-offline*
+<br>Click *Swap Cores*
 
 14. If needed, restart services
 ```console
