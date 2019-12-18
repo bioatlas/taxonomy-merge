@@ -23,9 +23,37 @@ cd /repos/ala-docker
 ```
 3. Build nameindex image \[*name:tag* - edit as needed\], using the namindexer tool in the *dyntaxa-index* directory. 
 ```console
-docker build --no-cache -t bioatlas/ala-dyntaxaindex:xxxxxx dyntaxa-index
+docker build --no-cache -t bioatlas/ala-dyntaxaindex:xxx dyntaxa-index
 ```
-
+4. Test search index (by searching for taxon zzz)
+```console
+docker run --rm -it bioatlas/ala-dyntaxaindex:xxx nameindexer -testSearch zzz
+```
+Should output something similar to:
+```console
+...
+Classification: "null",Bacteria,Acidobacteriota,Acidobacteriae,Acidobacteriales,Acidobacteriaceae,Edaphobacter
+Scientific name: zzz
+...
+Match type: exactMatch
+```
+5. 
+Setup nameindex service to start from newly created index image 
+```console
+nano docker-compose.yml
+```
+Ctrl+w to search for e.g. 'dynt'. Comment out current image and add new image, like so:
+```console
+nameindex:
+#image: bioatlas/ala-nameindex:v0.4
+#image: bioatlas/ala-dyntaxaindex:v0.4
+image: bioatlas/ala-dyntaxaindex:191124
+command: /bin/ash
+container_name: nameindex
+...
+```
+Ctrl+x to save
+6. 
 ## References
 Parks, D. H., et al. (2018). "A standardized bacterial taxonomy based on genome phylogeny substantially revises the tree of life." Nature Biotechnology, 36: 996-1004.
 
