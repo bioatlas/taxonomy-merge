@@ -9,5 +9,18 @@ Scripts for running and preparing input to the [ALA Taxonomy builder and nameind
 
 *merge-taxonomy.sh* <br>applies ALA Taxonomy builder, and outputs zip file to be transferred to the BioAtlas
 
+## Taxonomy implementation in the BioAtlas
+Notes below describe how to implement the merged taxonomy in a test version of the BioAtlas, and assumes that scp & ssh connection options (host, user, RSA key file) are specified in a *.ssh/config file*, allowing us to use an alias (here: *cloud*) for connections.
+
+1. Copy taxonomy-dwca to server
+
+```console
+
+scp ~/data/lucene/runs/xxx/dyntaxa.dwca.zip cloud:repos/ala-docker/dyntaxa-index
+
+```
+
 ## References
 Parks, D. H., et al. (2018). "A standardized bacterial taxonomy based on genome phylogeny substantially revises the tree of life." Nature Biotechnology, 36: 996-1004.
+
+
