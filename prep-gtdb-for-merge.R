@@ -1,8 +1,8 @@
 ################################################################################################
-# prep-gtdb-for-merge.R     
+# prep-gtdb-for-merge.R
 # Author: Maria Prager
 
-# Reads GTDB taxonomy (see data/prep-gtdb-for-r.sh), 
+# Reads GTDB taxonomy (see data/prep-gtdb-for-r.sh),
 # For each row, moves from low to high rank and adds id, name, missing ancestors (as new rows)
 # Calculates taxonID as md5 sum (and adds prefix)
 # Parses rows again, and looks up id of closest parent to each row
@@ -14,7 +14,7 @@
 # install.packages("purrr")
 # install.packages("dplyr")
 # install.packages("tibble")
-# install.packages("rstudioapi") 
+# install.packages("rstudioapi")
 # install.packages("digest")
 library(rstudioapi)
 library(purrr)
@@ -38,9 +38,9 @@ reformat.annot <- function(df) {
   # Replace missing values with 'NA'
   df[df == ''] <- NA
   # Cols to add (check later if all are needed, and if some should have data from db)
-  cols <- c('parentNameUsageID', 'acceptedNameUsageID',	'originalNameUsageID', 
-            'scientificName',	'scientificNameAuthorship','canonicalName',	'genericName', 
-            'taxonRank',	'nameAccordingTo', 'namePublishedIn', 'taxonomicStatus', 
+  cols <- c('parentNameUsageID', 'acceptedNameUsageID',	'originalNameUsageID',
+            'scientificName',	'scientificNameAuthorship','canonicalName',	'genericName',
+            'taxonRank',	'nameAccordingTo', 'namePublishedIn', 'taxonomicStatus',
             'nomenclaturalStatus', 'taxonRemarks')
   # Add cols
   df <- add_column(df, !!'taxonID' := NA, .before = 'datasetID')
@@ -65,7 +65,7 @@ get.name.n.rank <- function(row, rpart) {
     name <- paste(row[['genus']], row[['specificEpithet']]);
     rank <- 'species'
   }
-  else { 
+  else {
     name <- row[[rpart]]
     rank <- rpart
   }
@@ -82,7 +82,7 @@ add.id.name.rank <- function(df, ranks) {
     # Step through ranks, from low to high
     name <- NA
     #if (!is.na(full.name)){print(paste(j))}
-    for (i in rev(ranks)) { 
+    for (i in rev(ranks)) {
       # If rank is empty, go to next
       if (is.na(row[[i]])) { next }
       name.rank <- get.name.n.rank(row, i)
@@ -110,7 +110,7 @@ add.ancestors <- function(df, ranks) {
   for(j in 1:nrow(df)) {
     row <- df[j,]
     # Step through ranks, from low to high
-    for (i in rev(ranks)) { 
+    for (i in rev(ranks)) {
       # If rank is empty, go to next
       if (is.na(row[[i]])) { next }
       name.rank <- get.name.n.rank(row, i)
@@ -120,7 +120,7 @@ add.ancestors <- function(df, ranks) {
       # Else add ancestor
       anc.name <- name.rank['name']
       anc.rank <- name.rank['rank']
-      anc.row <- c(taxonid, row$datasetID, NA, NA, NA, anc.name, NA, NA, NA, anc.rank, NA, NA, 'accepted', 
+      anc.row <- c(taxonid, row$datasetID, NA, NA, NA, anc.name, NA, NA, NA, anc.rank, NA, NA, 'accepted',
                    NA, NA, (row[ranks]), NA)
       # Erase rank from memory (to not affect next)
       row[[i]] <- NA
@@ -166,7 +166,7 @@ sum.id <- function(prefix, idranks){
   return(taxonid)
 }
 
-# Get ancestors and their descendants, for single tacon name
+# Get ancestors and their descendants, for single taxon name
 filter.on.name <- function(df, name) {
   all = df[FALSE,]; anc = df[FALSE,]; chd = df[FALSE,]
   ids <- df$taxonID[df$scientificName == name]
@@ -214,12 +214,12 @@ setwd(dirname(getActiveDocumentContext()$path))
 annot.file <- 'data/gtdb-for-r-prep.tsv'
 taxa <- c('Clostridia')
 
-ranks <- c('kingdom',  'phylum', 'class',  'order',  'family', 'genus', 'specificEpithet', 
+ranks <- c('kingdom',  'phylum', 'class',  'order',  'family', 'genus', 'specificEpithet',
            'infraspecificEpithet', 'otu', 'asv')
 
 df <- read.annot(annot.file)
 df <- reformat.annot(df)
-df <- add.id.name.rank(df, ranks) 
+df <- add.id.name.rank(df, ranks)
 df <- add.ancestors(df, ranks)
 df <- add.parent.ids(df, ranks)
 

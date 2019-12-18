@@ -11,7 +11,6 @@
 
 # Edit as needed
 hdr="datasetID\tkingdom\tphylum\tclass\torder\tfamily\tgenus\tspecificEpithet\tinfraspecificEpithet\totu\tasv"
-#dir=~/Dropbox/BAS/Projects/1911-Taxonomy-merging/Code/dummy-data
 dir=$(pwd)/data
 gtdb=~/data/seq/GTDB/bac120_taxonomy.tsv
 
