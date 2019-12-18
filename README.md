@@ -42,7 +42,7 @@ Setup nameindex service to start from newly created index image
 ```console
 nano docker-compose.yml
 ```
-Ctrl+w to search for e.g. 'dynt'. Comment out current image and add new image, like so:
+*Ctrl+w* to search for e.g. 'dynt'. Comment out current image and add new image, like so:
 ```console
 nameindex:
 #image: bioatlas/ala-nameindex:v0.4
@@ -52,8 +52,22 @@ command: /bin/ash
 container_name: nameindex
 ...
 ```
-Ctrl+x to save
-6. 
+*Ctrl+x* to save
+
+6. Clean-up data volumes (will remove indices, and all data from ingested datasets)
+```console
+docker-compose stop nameindex biocachebackend biocacheservice specieslists
+docker rm -vf solr cassandradb nameindex biocachebackend biocacheservice specieslists
+docker volume rm ala-docker_data_solr ala-docker_db_data_cassandra ala-docker_data_nameindex
+```
+Start up (will create new nameindex service, as configurated in docker-compose.yml)
+```console
+docker-compose up -d
+docker-compose restart webserver
+```
+
+
+
 ## References
 Parks, D. H., et al. (2018). "A standardized bacterial taxonomy based on genome phylogeny substantially revises the tree of life." Nature Biotechnology, 36: 996-1004.
 
