@@ -109,13 +109,13 @@ docker cp dwc-a bieindex:/data/bie/import/
 *Some background: Solr core = running instance of a Lucene index, needed to perform indexing. The taxonomic index in BAS has two alternative cores, with the same schema (structure): bie and bie-offline. Swapping cores means to swap file pointers (inc. filename) between the cores. The point of this is to make it possible to perform the resource intensive and long process of taxonomy index generation offline (to produce bie-offline), so that it does not block the search functionality, before swapping it with the bie.*
 
 12. Import taxonomy to bie-offline index
-Go to [Admin | BIE Web services](http://molecular.infrabas.se/bie-index/admin)
+Go to Admin | BIE Web services
 <br>Click *DwCA Import - Import taxon data in Darwin Core Archive form*
 <br>Check *Clear existing taxonomic data* to clear up old stuffs if any
 <br>Click */data/bie/import/dwc-a 	Import DwCA*
 
 13. Swap cores
-In [SOLR admin](http://molecular.infrabas.se/solr/#/) , click *Core Admin* | *Swap*
+In SOLR admin, click *Core Admin* | *Swap*
 <br>Make sure it reads *this: bie andand: bie-offline*
 <br>Click *Swap Cores*
 
