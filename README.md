@@ -10,7 +10,7 @@ Scripts for running and preparing input to the [ALA Taxonomy builder and nameind
 *merge-taxonomy.sh* <br>applies ALA Taxonomy builder, and outputs zip file to be transferred to the BioAtlas
 
 ## Taxonomy implementation in the BioAtlas
-The steps below describe how to implement the merged taxonomy in a test version of the BioAtlas, and assumes that scp & ssh connection options (host, user, RSA key file) are specified in a *.ssh/config file*, allowing me to use the *cloud* alias. I use the *dyntaxa* label and *dyntaxa-index* directory for convenience only.
+The steps below describe how to implement the merged taxonomy in a test version of the BioAtlas, and assumes that scp & ssh connection options (host, user, RSA key file) are specified in a *.ssh/config file*, allowing alias usage (*cloud*). I use the *dyntaxa* label and *dyntaxa-index* directory for convenience only.
 
 1. Copy taxonomy-dwca (and if needed, the java tool nameindexer.zip) to server
 ```console
