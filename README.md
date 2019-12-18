@@ -29,7 +29,7 @@ docker build --no-cache -t bioatlas/ala-dyntaxaindex:xxx dyntaxa-index
 ```console
 docker run --rm -it bioatlas/ala-dyntaxaindex:xxx nameindexer -testSearch zzz
 ```
-    Should output something similar to:
+Should output something similar to:
 ```console
 ...
 Classification: "null",Bacteria,Acidobacteriota,Acidobacteriae,Acidobacteriales,Acidobacteriaceae,Edaphobacter
@@ -42,7 +42,7 @@ Setup nameindex service to start from newly created index image
 ```console
 nano docker-compose.yml
 ```
-    Ctrl+w to search for e.g. 'dynt'. Comment out current image and add new image, like so:
+Ctrl+w to search for e.g. 'dynt'. Comment out current image and add new image, like so:
 ```console
 nameindex:
 #image: bioatlas/ala-nameindex:v0.4
@@ -52,7 +52,7 @@ command: /bin/ash
 container_name: nameindex
 ...
 ```
-    Ctrl+x to save
+Ctrl+x to save
 6. 
 ## References
 Parks, D. H., et al. (2018). "A standardized bacterial taxonomy based on genome phylogeny substantially revises the tree of life." Nature Biotechnology, 36: 996-1004.
