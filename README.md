@@ -111,8 +111,8 @@ docker cp dwc-a bieindex:/data/bie/import/
 12. Import taxonomy to bie-offline index
 <br>Go to Admin | BIE Web services
 <br>Click *DwCA Import - Import taxon data in Darwin Core Archive form*
-<br>Check *Clear existing taxonomic data* to clear up old stuffs if any
-<br>Click */data/bie/import/dwc-a 	Import DwCA*
+<br>Check *Clear existing taxonomic data*, to clear up old stuff if any
+<br>Click */data/bie/import/dwc-a Import DwCA*
 
 13. Swap cores
 <br>In SOLR admin, click *Core Admin* | *Swap*
